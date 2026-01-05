@@ -5,49 +5,42 @@ require("dotenv").config();
 const app = express();
 
 /* ======================
-   ✅ CORS (SINGLE SOURCE)
+   ✅ CORS (FINAL + CORRECT)
    ====================== */
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "https://mini-saas-admin-dashboard.onrender.com/"
-];
-
-console.log("backend is running");
 
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: function (origin, callback) {
+      // Allow server-to-server, Postman, health checks
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      // Allow ALL Vercel deployments (preview + production)
+      if (
+        origin.endsWith(".vercel.app") ||
+        origin === "http://localhost:5173"
+      ) {
         return callback(null, true);
       }
 
-      return callback(new Error("Not allowed by CORS"));
+      return callback(new Error("CORS not allowed"));
     },
     credentials: true,
-  })
-);
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173", // local dev
-      "https://mini-saas-admin-dashboard.vercel.app", // production frontend
-    ],
-    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 /* ======================
    ✅ BODY PARSER
    ====================== */
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 /* ======================
    ✅ ROUTES
    ====================== */
+
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/users", require("./routes/user.routes"));
 app.use("/api/configs", require("./routes/config.routes"));
@@ -59,8 +52,11 @@ app.use("/api/audit-logs", require("./routes/auditLogs.routes"));
 /* ======================
    ✅ HEALTH CHECK
    ====================== */
+
 app.get("/", (req, res) => {
   res.send("Mini SaaS API is running");
 });
+
+console.log("Backend is running");
 
 module.exports = app;
