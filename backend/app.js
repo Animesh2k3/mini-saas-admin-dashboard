@@ -11,9 +11,10 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
+  "https://mini-saas-admin-dashboard.onrender.com/"
 ];
 
-console.log("backend chalgya");
+console.log("backend is running");
 
 app.use(
   cors({
@@ -26,6 +27,15 @@ app.use(
 
       return callback(new Error("Not allowed by CORS"));
     },
+    credentials: true,
+  })
+);
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // local dev
+      "https://mini-saas-admin-dashboard.vercel.app", // production frontend
+    ],
     credentials: true,
   })
 );
