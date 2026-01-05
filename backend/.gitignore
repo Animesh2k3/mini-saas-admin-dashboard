@@ -1,0 +1,18 @@
+# Environment variables
+.env
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Docker
+pgdata/
+
+# OS files
+.DS_Store
+Thumbs.db
