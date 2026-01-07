@@ -5,16 +5,16 @@ require("dotenv").config();
 const app = express();
 
 /* ======================
-   ✅ CORS (FINAL + CORRECT)
+   ✅ CORS (FINAL – PRODUCTION SAFE)
    ====================== */
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow Postman, curl, health checks
+      // Allow Postman / curl / health checks
       if (!origin) return callback(null, true);
 
-      // Allow localhost dev
+      // Local development
       if (origin === "http://localhost:5173") {
         return callback(null, true);
       }
@@ -27,13 +27,10 @@ app.use(
       return callback(new Error("CORS not allowed"));
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-app.options("*", cors());
-
 
 /* ======================
    ✅ BODY PARSER
