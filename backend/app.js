@@ -32,6 +32,8 @@ app.use(
   })
 );
 
+app.options("*", cors());
+
 
 /* ======================
    ✅ BODY PARSER
