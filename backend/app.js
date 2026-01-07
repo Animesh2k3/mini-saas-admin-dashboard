@@ -11,14 +11,16 @@ const app = express();
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow server-to-server, Postman, health checks
+      // Allow Postman, curl, health checks
       if (!origin) return callback(null, true);
 
-      // Allow ALL Vercel deployments (preview + production)
-      if (
-        origin.endsWith(".vercel.app") ||
-        origin === "http://localhost:5173"
-      ) {
+      // Allow localhost dev
+      if (origin === "http://localhost:5173") {
+        return callback(null, true);
+      }
+
+      // Allow ALL Vercel deployments
+      if (origin.endsWith(".vercel.app")) {
         return callback(null, true);
       }
 
@@ -29,6 +31,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 
 /* ======================
    ✅ BODY PARSER
