@@ -13,7 +13,7 @@ router.get("/me", auth, controller.getMe);
 router.get("/", auth, role("admin"), controller.getUsers);
 router.get("/:id", auth, role("admin"), controller.getUserById);
 router.patch("/:id", auth, role("admin"), controller.updateUser);
-router.put("/:id/status", auth, role("admin"), controller.updateUserStatus);
+router.patch("/:id/status", auth, role("admin"), controller.updateUserStatus);
 router.patch("/:id/role", auth, role("admin"), controller.updateUserRole);
 router.delete("/:id", auth, role("admin"), controller.deleteUser);
 
