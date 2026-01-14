@@ -22,7 +22,7 @@ This project focuses on backend correctness, database design, and real-world adm
 - ⚙️ **Configuration Management** - Add/edit system configs
 - 📋 **Audit Logging** - Real-time tracking of admin actions
 
-> ⚠️ **Note**: Backend uses free PostgreSQL instance which may spin down after inactivity. Full database schema and seed scripts provided for local setup.
+> ⚠️ **Note**: Backend uses free PostgreSQL instance which may spin down after inactivity. Full database schema provided for local setup.
 
 ---
 
